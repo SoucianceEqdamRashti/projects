@@ -1,0 +1,43 @@
+﻿<br />
+<div style="max-width: 70%;">
+    <MudText Typo="Typo.h5">Fyll i formuläret för att kontakta oss!</MudText>
+    <br />
+    <MudCard>
+        <MudForm Model="@contact" @ref="@contactForm">
+            <MudCardContent>
+
+              <MudTextField @bind-Value="contact.ToName"
+                              Validation="@(contactModelValidator.ValidateValue)"
+                              For="@(() => contact.ToName)"
+                              Immediate="true"
+                              Label="Namn"
+                              HelperText="Fyll i ditt namn"        
+                              id="MailFormNameTextField"
+                              />
+                             
+
+                <MudTextField @bind-Value="contact.ToEmailAddress"
+                              Validation="@(contactModelValidator.ValidateValue)"
+                              For="@(() => contact.ToEmailAddress)"
+                              Immediate="true"
+                              Label="Email" />
+
+                <MudTextField @bind-Value="contact.Subject"
+                              Validation="@(contactModelValidator.ValidateValue)"
+                              For="@(() => contact.Subject)"
+                              Immediate="true"
+                              Label="Ärende"/>
+
+                <MudTextField @bind-Value="contact.Body"
+                              Validation="@(contactModelValidator.ValidateValue)"
+                              For="@(() => contact.Body)"
+                              Immediate="true"
+                              Label="Din förfrågan"
+                              Lines="10"/>
+            </MudCardContent>            
+        </MudForm>
+        <MudCardActions>
+            <MudButton id="MailSubmitButton" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="@(async () => await Submit())">Skicka</MudButton>
+        </MudCardActions>
+    </MudCard>
+</div>

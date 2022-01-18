@@ -1,0 +1,38 @@
+﻿@using SkaneRegionalPlaces.App.Shared
+@inject IJSRuntime JSRuntime
+<MudDialog>
+    <DialogContent>
+        <b>Plats:</b><br /><MudText>@RegionalPlace.Location</MudText><br />
+        <b>Namn</b><br /><MudText>@RegionalPlace.Name</MudText><br />
+        <b>Address</b><br /><MudText>@RegionalPlace.Address</MudText><br />
+        <b>Hemsida</b><br />
+        <MudElement HtmlTag="a"
+                    Class="ma-0"
+                    Style="color:red;font-weight:bold;"
+                    href="@RegionalPlace.Url"
+                    target="blank"
+                    rel="noopener noreferrer">
+            @RegionalPlace.Url
+        </MudElement><br />
+        <b>Taggar</b><br /><MudText>@RegionalPlace.Tags</MudText><br />
+        <b>Beskrivande text</b><br /><MudText>@RegionalPlace.Description</MudText>
+        <br />
+        <div id="myMap" style='position:fixed;width:1200px;height:600px;'></div>
+
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Close</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("showMap", RegionalPlace.Latitude, RegionalPlace.Longitude, RegionalPlace.Name, RegionalPlace.Location, RegionalPlace.Address);
+        }
+    }
+
+}

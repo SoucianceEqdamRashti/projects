@@ -1,0 +1,47 @@
+﻿@page "/addregionalplace"
+<div style="max-width: 70%;">
+    <MudText Typo="Typo.h5">Fyll i formuläret för att lägga till ny plats.</MudText>
+    <br />
+    <MudCard>
+        <MudForm Model="@RegionalPlace" @ref="@RegionalPlaceForm">
+            <MudCardContent>
+
+                <MudTextField @bind-Value="RegionalPlace.Name"
+                              Label="Namn"
+                              HelperText="Fyll i platsens namn" />
+
+                <MudTextField @bind-Value="RegionalPlace.Location"
+                              Label="Plats" />
+
+                <MudTextField @bind-Value="RegionalPlace.Tags"
+                              Immediate="true"
+                              Label="Taggar" />
+                <MudTextField @bind-Value="RegionalPlace.Address"
+                              Immediate="true"
+                              Label="Adress" />
+
+                <MudTextField @bind-Value="RegionalPlace.Url"
+                              Immediate="true"
+                              Label="Hemsida" />
+                <MudTextField @bind-Value="RegionalPlace.Description"
+                              Immediate="true"
+                              Label="Beskrivning"
+                              Lines="10" />
+                <MudTextField @bind-Value="RegionalPlace.Longitude"
+                              Immediate="true"
+                              Label="Longitude"
+                              />
+                <MudTextField @bind-Value="RegionalPlace.Latitude"
+                              Immediate="true"
+                              Label="Latitude"
+                              />
+
+
+
+            </MudCardContent>
+        </MudForm>
+        <MudCardActions>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="@(async () => await Submit())">Skicka</MudButton>
+        </MudCardActions>
+    </MudCard>
+</div>

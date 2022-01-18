@@ -1,0 +1,31 @@
+@page "/authentication/{action}"
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+<RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="OnLogInSucceeded" OnLogOutSucceeded="OnLogOutSucceeded" />
+
+@code{
+    [Parameter] public string Action { get; set; }
+    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+
+    [Inject] private IApplicationInsights AppInsights { get; set; }
+    [Inject]
+    private ILogger<Authentication> Logger { get; set; }
+    public async Task OnLogInSucceeded()
+    {
+        var user = (await AuthenticationState).User;
+        var authenticatedUser = user.Identity.Name.Replace(" ", string.Empty);
+        var isAuthenticated = user.Identity.IsAuthenticated;
+        var authenticationType = user.Identity.AuthenticationType;
+        Logger.LogInformation(authenticatedUser + " " + isAuthenticated.ToString() + " " + authenticationType);
+        Logger.LogInformation(user.FindFirst("preferred_username")?.Value);
+        var username = user.FindFirst("preferred_username")?.Value;
+        await AppInsights.SetAuthenticatedUserContext(authenticatedUser, username, true );
+        await AppInsights.TrackEvent("Authentication");
+        await AppInsights.Flush();
+    }
+
+    public async Task OnLogOutSucceeded()
+    {
+        await AppInsights.ClearAuthenticatedUserContext();
+    }
+}

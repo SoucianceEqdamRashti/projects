@@ -1,0 +1,18 @@
+﻿@inject ILogger<GlobalError> Logger
+@inject IApplicationInsights Insights
+    <CascadingValue Value=this>
+        @ChildContent
+    </CascadingValue>
+
+    @code {
+
+        [Parameter]
+        public RenderFragment ChildContent { get; set; }
+
+        public void ProcessError(Exception ex)
+        {
+            Logger.LogError("Error:ProcessError - Type: {Type} Message: {Message}",
+                ex.GetType(), ex.Message);
+            Insights.TrackException(new Error() { Message = $"{ex.StackTrace} {ex.InnerException.StackTrace}", Name = $"{ex.Message} " }, null, SeverityLevel.Critical);
+        }
+    }

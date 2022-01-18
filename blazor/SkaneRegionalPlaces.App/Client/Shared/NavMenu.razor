@@ -1,0 +1,31 @@
+﻿
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> <MudIcon Icon="@Icons.Material.Filled.Home" Class="pr-2" Size="Size.Large" Title="Home" />Hem
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="regionalplaceoverview">
+                <span class="oi oi-list-rich" aria-hidden="true"></span><MudIcon Icon="@Icons.Material.Filled.ViewList" Class="pr-2" Size="Size.Large" Title="List" /> Regionala Platser
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="addregionalplace">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> <MudIcon Icon="@Icons.Material.Filled.Add" Class="pr-2" Title="Add" Size="Size.Large" />Lägg till en ny plats
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

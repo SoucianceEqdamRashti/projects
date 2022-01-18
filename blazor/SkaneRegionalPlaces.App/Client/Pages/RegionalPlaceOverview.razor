@@ -1,0 +1,49 @@
+﻿@page "/regionalplaceoverview"
+@using SkaneRegionalPlaces.App.Shared
+@using SkaneRegionalPlaces.App.Client.ViewModels
+@using Microsoft.AspNetCore.Authorization
+@using System.Threading.Tasks;
+@attribute [Authorize]
+@inject RegionalPlaceOverviewViewModel _regionalPlaceOverviewViewModel
+
+
+
+<h1>Regionala platser att besöka i Skåne</h1>
+
+<p>Klicka på en rad för att se mer detaljer om en plats.</p>
+
+@if (_regionalPlaceOverviewViewModel.IsLoading)
+{
+<MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+
+}
+else
+{
+    <MudTable ServerData="@(new Func<TableState, Task<TableData<RegionalPlace>>>(ServerReload))"
+              Dense="true" Hover="true" @ref="table" T="RegionalPlace" OnRowClick="@ShowSelectedRegionalPlaceDialogAsync">
+        <ToolBarContent>
+            <MudSpacer />
+            <MudTextField T="string" ValueChanged="@(s => OnSearch(s))" Placeholder="Search" Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortLabel="name_field" T="RegionalPlace">Namn</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="location_field" T="RegionalPlace">Plats</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="tags_field" T="RegionalPlace">Typ av verksamhet</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Namn">@context.Name</MudTd>
+            <MudTd DataLabel="Plats">@context.Location</MudTd>
+            <MudTd DataLabel="Typ av verksamhet">@context.Tags</MudTd>
+        </RowTemplate>
+        <NoRecordsContent>
+            <MudText>No matching records found</MudText>
+        </NoRecordsContent>
+        <LoadingContent>
+            <MudText>Loading...</MudText>
+        </LoadingContent>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+}
