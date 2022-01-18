@@ -10,7 +10,7 @@ namespace SkaneRegionalPlaces.App.Server.Services
 {
     public class RegionalPlaceRepositoryService
     {
-        public string StorageConnectionString { get; set; } = "DefaultEndpointsProtocol=https;AccountName=souciblazorappstorage;AccountKey=9iLjYeC+izhHuoZaCdvruLNztUh4hbv3tzkFY3Z3m0u3VNLWZrzt8dW12wN5q+m4IeH3ISBfF6ZfkYAa/bA/cg==;EndpointSuffix=core.windows.net";
+        public string StorageConnectionString { get; set; } = "storage connection string";
 
         public IEnumerable<RegionalPlace> GetRegionalPlaces()
         {
